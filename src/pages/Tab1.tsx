@@ -1,25 +1,36 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
+import { useInView } from 'react-intersection-observer';
+import { useRef } from 'react';
+
 
 const Tab1: React.FC = () => {
+  const contentRef = useRef(null);
+
+
+  const { ref, inView } = useInView({
+    root: contentRef.current,
+    rootMargin: '0px 0px -50px 0px', // Customize this as needed
+    threshold: 0.1,
+  });
+
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>Intersection Observer</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+      <IonContent fullscreen ref={contentRef}>
+        <div style={{ height: '150vh' }}>Scroll down to see the effect</div>
+        <div ref={ref} style={{ height: '100px', backgroundColor: inView ? 'green' : 'red' }}>
+          {inView ? 'In View' : 'Out of View'}
+        </div>
       </IonContent>
     </IonPage>
   );
 };
+
 
 export default Tab1;
