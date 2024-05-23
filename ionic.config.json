@@ -1,0 +1,7 @@
+{
+  "name": "intersection-observer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
